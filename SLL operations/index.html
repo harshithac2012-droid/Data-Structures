@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singly Linked List Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Singly Linked List Visualizer</h1>
+        <p class="subtitle">Visualize and perform operations on a singly linked list</p>
+
+        <!-- Message Display -->
+        <div id="message" class="message hidden"></div>
+
+        <!-- Visualization -->
+        <div class="visualization-box">
+            <h2>List Visualization</h2>
+            <div id="listContainer" class="list-container">
+                <p class="empty-message">List is empty. Add some nodes to get started!</p>
+            </div>
+            <div class="list-length">Length: <span id="length">0</span> nodes</div>
+        </div>
+
+        <!-- Operations Grid -->
+        <div class="operations-grid">
+            <!-- Insertion Operations -->
+            <div class="operation-card">
+                <h3>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Insertion Operations
+                </h3>
+                <div class="input-group">
+                    <input type="text" id="insertValue" placeholder="Enter value to insert">
+                    <div class="button-row">
+                        <button onclick="insertAtBeginning()" class="btn btn-primary">Insert at Beginning</button>
+                        <button onclick="insertAtEnd()" class="btn btn-primary">Insert at End</button>
+                    </div>
+                    <div class="button-row">
+                        <input type="number" id="insertPosition" placeholder="Position" class="position-input">
+                        <button onclick="insertAtPosition()" class="btn btn-primary flex-grow">Insert at Position</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deletion Operations -->
+            <div class="operation-card">
+                <h3>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    Deletion Operations
+                </h3>
+                <div class="input-group">
+                    <div class="button-row">
+                        <button onclick="deleteAtBeginning()" class="btn btn-danger">Delete at Beginning</button>
+                        <button onclick="deleteAtEnd()" class="btn btn-danger">Delete at End</button>
+                    </div>
+                    <div class="button-row">
+                        <input type="number" id="deletePosition" placeholder="Position" class="position-input">
+                        <button onclick="deleteAtPosition()" class="btn btn-danger flex-grow">Delete at Position</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search & Traverse -->
+            <div class="operation-card">
+                <h3>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    Search & Traverse
+                </h3>
+                <div class="input-group">
+                    <div class="button-row">
+                        <input type="text" id="searchValue" placeholder="Enter value to search" class="flex-grow">
+                        <button onclick="searchNode()" class="btn btn-info">Search</button>
+                    </div>
+                    <button onclick="traverse()" class="btn btn-info full-width">
+                        <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        Traverse List
+                    </button>
+                </div>
+            </div>
+
+            <!-- Status Check -->
+            <div class="operation-card">
+                <h3>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    Status Check
+                </h3>
+                <div class="input-group">
+                    <button onclick="checkIsEmpty()" class="btn btn-success full-width">
+                        <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        Check if Empty
+                    </button>
+                    <button onclick="checkIsFull()" class="btn btn-success full-width">
+                        <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        Check if Full
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
