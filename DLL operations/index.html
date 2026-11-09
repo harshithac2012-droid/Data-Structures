@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doubly Linked List Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Doubly Linked List Visualizer</h1>
+        <p class="subtitle">Max Size: <span id="maxSize">10</span> nodes</p>
+
+        <!-- Message Display -->
+        <div id="message" class="message"></div>
+
+        <!-- Visualization -->
+        <div class="visualization" id="visualization">
+            <p class="empty-message">Empty List - Add some nodes to get started</p>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-grid">
+            <!-- Insertion -->
+            <div class="control-card">
+                <h2>Insertion</h2>
+                <input type="text" id="insertValue" placeholder="Enter value" class="input-field">
+                <div class="button-group">
+                    <button onclick="insertAtBeginning()" class="btn btn-blue">Insert at Beginning</button>
+                    <button onclick="insertAtEnd()" class="btn btn-blue">Insert at End</button>
+                    <div class="input-button-row">
+                        <input type="number" id="insertPosition" placeholder="Position" class="input-field">
+                        <button onclick="insertAtPosition()" class="btn btn-blue">Insert at Position</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deletion -->
+            <div class="control-card">
+                <h2>Deletion</h2>
+                <div class="button-group">
+                    <button onclick="deleteFromBeginning()" class="btn btn-red">Delete from Beginning</button>
+                    <button onclick="deleteFromEnd()" class="btn btn-red">Delete from End</button>
+                    <div class="input-button-row">
+                        <input type="number" id="deletePosition" placeholder="Position" class="input-field">
+                        <button onclick="deleteAtPosition()" class="btn btn-red">Delete at Position</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search & Traverse -->
+            <div class="control-card">
+                <h2>Search</h2>
+                <div class="input-button-row">
+                    <input type="text" id="searchValue" placeholder="Search value" class="input-field">
+                    <button onclick="search()" class="btn btn-green">Search</button>
+                </div>
+                <button onclick="traverse()" class="btn btn-green">Traverse List</button>
+            </div>
+
+            <!-- Utility -->
+            <div class="control-card">
+                <h2>Utility</h2>
+                <div class="button-group">
+                    <button onclick="checkIsEmpty()" class="btn btn-gray">Check if Empty</button>
+                    <button onclick="checkIsFull()" class="btn btn-gray">Check if Full</button>
+                    <div class="status-info">
+                        Current Size: <span id="currentSize" class="font-medium">0/10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
