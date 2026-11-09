@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Towers of Hanoi Visualizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .api-status {
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .api-status.connected {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .api-status.disconnected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .api-status.loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .controls label {
+            font-size: 1.2em;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        .controls input {
+            padding: 10px 15px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 100px;
+            text-align: center;
+        }
+
+        .controls button {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .controls button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .controls button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .info {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #34495e;
+            font-size: 1.1em;
+        }
+
+        .towers-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 350px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .tower {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            width: 200px;
+            position: relative;
+        }
+
+        .rod {
+            width: 8px;
+            height: 250px;
+            background: #2c3e50;
+            position: absolute;
+            bottom: 30px;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .base {
+            width: 200px;
+            height: 30px;
+            background: #2c3e50;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .disk {
+            height: 30px;
+            border-radius: 15px;
+            margin: 2px 0;
+            position: relative;
+            z-index: 1;
+            transition: all 0.5s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .disk-1 { width: 60px; background: #3498db; }
+        .disk-2 { width: 100px; background: #2ecc71; }
+        .disk-3 { width: 140px; background: #e74c3c; }
+        .disk-4 { width: 180px; background: #f39c12; }
+        .disk-5 { width: 220px; background: #9b59b6; }
+        .disk-6 { width: 260px; background: #1abc9c; }
+        .disk-7 { width: 300px; background: #e67e22; }
+
+        .move-display {
+            text-align: center;
+            font-size: 1.2em;
+            color: #34495e;
+            min-height: 30px;
+            font-weight: 500;
+        }
+
+        @keyframes highlight {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .disk.moving {
+            animation: highlight 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Towers of Hanoi Visualizer</h1>
+        <p class="subtitle">Connected to Flask API Backend using Stack Data Structure</p>
+        
+        <div id="apiStatus" class="api-status loading">
+            🔄 Connecting to API...
+        </div>
+        
+        <div class="controls">
+            <label for="disks">Number of disks:</label>
+            <input type="number" id="disks" min="1" max="7" value="3">
+            <button id="solveBtn">Solve with API</button>
+            <button id="resetBtn">Reset</button>
+        </div>
+
+        <div class="info">
+            <div id="moveCount">Moves: 0</div>
+        </div>
+
+        <div class="towers-container">
+            <div class="tower" id="tower-0">
+                <div class="rod"></div>
+                <div class="base"></div>
+            </div>
+            <div class="tower" id="tower-1">
+                <div class="rod"></div>
+                <div class="base"></div>
+            </div>
+            <div class="tower" id="tower-2">
+                <div class="rod"></div>
+                <div class="base"></div>
+            </div>
+        </div>
+
+        <div class="move-display" id="moveDisplay"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000';
+        let towers = [[], [], []];
+        let moveCount = 0;
+        let isAnimating = false;
+
+        // Check API health on load
+        async function checkAPIHealth() {
+            const statusEl = document.getElementById('apiStatus');
+            try {
+                const response = await fetch(`${API_URL}/api/health`);
+                if (response.ok) {
+                    statusEl.className = 'api-status connected';
+                    statusEl.textContent = '✓ Connected to Flask API Backend';
+                } else {
+                    throw new Error('API not responding');
+                }
+            } catch (error) {
+                statusEl.className = 'api-status disconnected';
+                statusEl.textContent = '✗ Flask API Not Running - Start server with: python app.py';
+            }
+        }
+
+        function initializeTowers(n) {
+            towers = [[], [], []];
+            for (let i = n; i >= 1; i--) {
+                towers[0].push(i);
+            }
+            renderTowers();
+            moveCount = 0;
+            updateMoveCount();
+        }
+
+        function renderTowers() {
+            for (let i = 0; i < 3; i++) {
+                const tower = document.getElementById(`tower-${i}`);
+                const disks = tower.querySelectorAll('.disk');
+                disks.forEach(disk => disk.remove());
+
+                towers[i].forEach(diskSize => {
+                    const disk = document.createElement('div');
+                    disk.className = `disk disk-${diskSize}`;
+                    disk.dataset.size = diskSize;
+                    tower.appendChild(disk);
+                });
+            }
+        }
+
+        function updateMoveCount() {
+            document.getElementById('moveCount').textContent = `Moves: ${moveCount}`;
+        }
+
+        function updateMoveDisplay(from, to, moveNum, total) {
+            const display = document.getElementById('moveDisplay');
+            display.textContent = `Move ${moveNum}/${total}: Tower ${from + 1} → Tower ${to + 1}`;
+        }
+
+        async function animateMove(from, to, disk) {
+            towers[from].pop();
+            towers[to].push(disk);
+            
+            renderTowers();
+            moveCount++;
+            updateMoveCount();
+
+            const allDisks = document.querySelectorAll('.disk');
+            allDisks.forEach(d => {
+                if (d.dataset.size == disk) {
+                    d.classList.add('moving');
+                    setTimeout(() => d.classList.remove('moving'), 500);
+                }
+            });
+
+            await new Promise(resolve => setTimeout(resolve, 600));
+        }
+
+        async function solve() {
+            if (isAnimating) return;
+            
+            const n = parseInt(document.getElementById('disks').value);
+            if (n < 1 || n > 7) {
+                alert('Please enter a number between 1 and 7');
+                return;
+            }
+
+            isAnimating = true;
+            document.getElementById('solveBtn').disabled = true;
+            document.getElementById('disks').disabled = true;
+
+            try {
+                // Call Flask API
+                const response = await fetch(`${API_URL}/api/solve`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ n_disks: n })
+                });
+
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.error || 'Failed to solve');
+                }
+
+                // Initialize towers
+                initializeTowers(n);
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                // Animate all moves from API
+                const moves = data.moves;
+                for (let i = 0; i < moves.length; i++) {
+                    const move = moves[i];
+                    updateMoveDisplay(move.from, move.to, i + 1, moves.length);
+                    await animateMove(move.from, move.to, move.disk);
+                }
+
+                document.getElementById('moveDisplay').textContent = 
+                    `✓ Solved! ${data.total_moves} moves using Stack-based algorithm`;
+
+            } catch (error) {
+                alert(`Error: ${error.message}\n\nMake sure Flask API is running:\npython app.py`);
+                document.getElementById('moveDisplay').textContent = '✗ API Error';
+            } finally {
+                isAnimating = false;
+                document.getElementById('solveBtn').disabled = false;
+                document.getElementById('disks').disabled = false;
+            }
+        }
+
+        function reset() {
+            if (isAnimating) return;
+            
+            const n = parseInt(document.getElementById('disks').value);
+            initializeTowers(n);
+            document.getElementById('moveDisplay').textContent = '';
+        }
+
+        document.getElementById('solveBtn').addEventListener('click', solve);
+        document.getElementById('resetBtn').addEventListener('click', reset);
+
+        // Initialize
+        checkAPIHealth();
+        initializeTowers(3);
+    </script>
+</body>
+</html>
