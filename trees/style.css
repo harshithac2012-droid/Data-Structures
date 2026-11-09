@@ -1,0 +1,260 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #F5F5F0 0%, #E8E4DF 100%);
+    color: #4A4A4A;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+    text-align: center;
+    color: #6B5D54;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.explanation-box {
+    background: #FAF8F5;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid #E5E0DB;
+}
+
+.explanation-box h3 {
+    color: #8B7968;
+    margin-bottom: 12px;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.explanation-box p {
+    margin-bottom: 10px;
+    line-height: 1.7;
+    color: #6B5D54;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.control-group label {
+    font-weight: 600;
+    color: #6B5D54;
+    font-size: 0.9em;
+}
+
+input[type="number"],
+select {
+    padding: 12px;
+    border: 1px solid #D4CEC7;
+    border-radius: 8px;
+    background: #FDFCFB;
+    color: #4A4A4A;
+    font-size: 1em;
+    transition: all 0.3s;
+}
+
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: #B8AA9E;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(184, 170, 158, 0.1);
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 0.3px;
+}
+
+.btn-insert {
+    background: #C9B8A8;
+    color: #FFFFFF;
+}
+
+.btn-insert:hover {
+    background: #B8AA9E;
+}
+
+.btn-search {
+    background: #E8DDD2;
+    color: #6B5D54;
+}
+
+.btn-search:hover {
+    background: #D9CCBE;
+}
+
+.btn-delete {
+    background: #D4BBA8;
+    color: #FFFFFF;
+}
+
+.btn-delete:hover {
+    background: #C4AA96;
+}
+
+.btn-clear {
+    background: #A89885;
+    color: #FFFFFF;
+    grid-column: 1 / -1;
+}
+
+.btn-clear:hover {
+    background: #988673;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.message {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message.success {
+    background: #E8F5E9;
+    border: 1px solid #C8E6C9;
+    color: #2E7D32;
+}
+
+.message.error {
+    background: #FFEBEE;
+    border: 1px solid #FFCDD2;
+    color: #C62828;
+}
+
+.message.info {
+    background: #E3F2FD;
+    border: 1px solid #BBDEFB;
+    color: #1565C0;
+}
+
+.tree-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.info-card {
+    background: #FAF8F5;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #E5E0DB;
+}
+
+.info-card h4 {
+    color: #8B7968;
+    margin-bottom: 10px;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.info-card p {
+    font-size: 2em;
+    color: #C9B8A8;
+    font-weight: 700;
+}
+
+#treeCanvas {
+    width: 100%;
+    height: 500px;
+    background: #FDFCFB;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid #E5E0DB;
+}
+
+.traversal-box {
+    background: #FAF8F5;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #E5E0DB;
+}
+
+.traversal-box h3 {
+    color: #8B7968;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.traversal-result {
+    margin-bottom: 12px;
+    padding: 12px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    border-left: 3px solid #C9B8A8;
+}
+
+.traversal-result strong {
+    color: #6B5D54;
+    margin-right: 10px;
+    font-weight: 600;
+}
+
+.traversal-result span {
+    color: #8B7968;
+    font-family: 'Courier New', monospace;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.8em;
+    }
+    
+    .controls {
+        grid-template-columns: 1fr;
+    }
+    
+    #treeCanvas {
+        height: 400px;
+    }
+}

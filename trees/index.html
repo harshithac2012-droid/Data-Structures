@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Tree Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">🌳 Binary Tree Visualizer</h1>
+        
+        <div class="explanation-box">
+            <h3>📚 About Trees in Data Structures</h3>
+            <p><strong>Binary Tree:</strong> A hierarchical data structure where each node has at most two children (left and right).</p>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>Tree Type:</label>
+                <select id="treeType">
+                <option value="binary">Binary Tree</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Insert Value:</label>
+                <input type="number" id="insertInput" placeholder="Enter number">
+                <button onclick="insertNode()" class="btn btn-insert">Insert</button>
+            </div>
+
+            <div class="control-group">
+                <label>Search Value:</label>
+                <input type="number" id="searchInput" placeholder="Enter number">
+                <button onclick="searchNode()" class="btn btn-search">Search</button>
+            </div>
+
+            <div class="control-group">
+                <label>Delete Value:</label>
+                <input type="number" id="deleteInput" placeholder="Enter number">
+                <button onclick="deleteNode()" class="btn btn-delete">Delete</button>
+            </div>
+
+            <button onclick="clearTree()" class="btn btn-clear">Clear Tree</button>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <div class="tree-info">
+            <div class="info-card">
+                <h4>Total Nodes</h4>
+                <p id="nodeCount">0</p>
+            </div>
+            <div class="info-card">
+                <h4>Tree Height</h4>
+                <p id="treeHeight">0</p>
+            </div>
+            <div class="info-card">
+                <h4>Leaf Nodes</h4>
+                <p id="leafCount">0</p>
+            </div>
+        </div>
+
+        <canvas id="treeCanvas"></canvas>
+
+        <div class="traversal-box">
+            <h3>🔄 Tree Traversals</h3>
+            <div class="traversal-result">
+                <strong>In-order:</strong> <span id="inorder">-</span>
+            </div>
+            <div class="traversal-result">
+                <strong>Pre-order:</strong> <span id="preorder">-</span>
+            </div>
+            <div class="traversal-result">
+                <strong>Post-order:</strong> <span id="postorder">-</span>
+            </div>
+            <div class="traversal-result">
+                <strong>Level-order:</strong> <span id="levelorder">-</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
